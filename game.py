@@ -30,6 +30,7 @@ def getBlockData():
                 with open("data/blocks/"+folder+"/__init__.py", "w") as f:
                     pass
                 f=importlib.import_module("data.blocks."+folder+".main")
+                print("Found script for block: "+name+" id: "+folder)
             block=Block(int(folder),vColor, hColor, collidable)
             if f != None:
                 if hasattr(f, "onCollide"):
@@ -181,6 +182,21 @@ def drawRays():
             ra-=2*math.pi
 
 
+floorColor=(0,0,0)
+ceilingColor=(0,0,0)
+player=None
+mapT=None
+
+def loadMap(file,blocks):
+    global player, mapT, floorColor, ceilingColor
+    mapT=Map(file,blocks)
+    floorColor=mapT.getFloorColor()
+    ceilingColor=mapT.getCeilingColor()
+    if player is None:
+        player=Player(150,mapT,blocks)
+    else:
+        player.updateMap(mapT)
+
 if __name__=="__main__":
     pygame.init()
     pygame.font.init()
@@ -202,22 +218,13 @@ if __name__=="__main__":
     clock=pygame.time.Clock()
 
     blocks={"air":Block(collidable=False)}
-
-    px=0
-    py=0
-
-    floorColor=(0,0,0)
-    ceilingColor=(0,0,0)
     getBlockData()
-    mapT=Map("data/map.dat",blocks)
-    floorColor=mapT.getFloorColor()
-    ceilingColor=mapT.getCeilingColor()
-    player=Player(150,mapT,blocks)
+    #mapT=Map("data/map.dat",blocks)
+    loadMap("data/map.dat",blocks)
+    #player=Player(150,mapT,blocks)
     locked=False
 
     myfont = pygame.font.SysFont('Arial', 30)
-
-
 
     while not done:
         for event in pygame.event.get():

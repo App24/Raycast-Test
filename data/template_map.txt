@@ -1,0 +1,5 @@
+MapSizeX,MapSizeY int,int
+PlayerPosX,PlayerY float,float
+CeilingColor r,g,b
+FloorColor r,g,b
+Map data

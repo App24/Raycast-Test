@@ -1,0 +1,4 @@
+name, string lowercase
+Vertical Color r,g,b
+Horizontal Color r,g,b
+Collidable 1 or 0

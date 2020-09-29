@@ -22,6 +22,12 @@ class Player:
         return self.getPos()[0]
     def getY(self)->float:
         return self.getPos()[1]
+    def setX(self, x):
+        self.px=x
+    def setY(self, y):
+        self.py=y
+    def updateMap(self, mapT):
+        self.map=mapT
     def getPlayerAngle(self)->float:
         return self.pa
     def movePlayer(self, keys:tuple, locked:bool,clock):
@@ -82,9 +88,9 @@ class Player:
             block=Block()
             if self.map.isValidBlock(nextMp):
                 block=self.map.getBlock(nextMp)
-                block.onCollision({"mp":nextMp,"map":self.map, "block":block, "blocks":self.blocks})
+                block.onCollision({"mp":nextMp,"map":self.map, "block":block, "blocks":self.blocks, "player":self})
             if self.map.getBlockID(nextMp)==0 or not block.isCollidable():
                 return False
         return True
 if __name__=="__main__":
-    raise Exception("You buffoon, use raycast.py")
+    raise Exception("You buffoon, use game.py")

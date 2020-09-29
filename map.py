@@ -2,9 +2,9 @@ from block import Block
 
 class Map:
     def __init__(self, file, blocks):
-        self._loadMap(file, blocks)
+        self.loadMap(file, blocks)
         self.mapS=64
-    def _loadMap(self, file, blocks):
+    def loadMap(self, file, blocks):
         with open(file, "r") as f:
             self.blocks=blocks
             size=f.readline().strip()
@@ -29,7 +29,10 @@ class Map:
                 for block in yBlocks[:self.mapX]:
                     if not block.isnumeric():
                         block="1"
-                    self.map.append(list(blocks.values())[int(block)].createNew())
+                    blockB=Block(id=int(block))
+                    if int(block)>=0 and int(block)<len(list(blocks.values())):
+                        blockB=list(blocks.values())[int(block)]
+                    self.map.append(blockB.createNew())
     def getPlayerPos(self)->tuple:
         return (self.px, self.py)
     def getPlayerX(self)->float:
@@ -67,4 +70,4 @@ class Map:
         return (self.getBlockID(mp)>=0 and self.getBlockID(mp)<len(self.blocks))
 
 if __name__=="__main__":
-    raise Exception("You buffoon, use raycast.py")
+    raise Exception("You buffoon, use game.py")
